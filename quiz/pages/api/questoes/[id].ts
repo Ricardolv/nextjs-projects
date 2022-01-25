@@ -1,6 +1,5 @@
 import questoes from '../bancoDeQuestoes'
 export default function questoesProId(req, res) {
-    
     const idSelecionado = +req.query.id
 
     const unicaQuestaoOuNada = questoes.filter(questao => questao.id === idSelecionado)
@@ -11,5 +10,4 @@ export default function questoesProId(req, res) {
     } else {
         res.status(204).send()
     }
-    
 }
