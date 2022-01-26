@@ -60,7 +60,6 @@ export function AuthProvider(props) {
         
     }
 
-
     async function loginGoogle() {
         const resp = await firebase.auth().signInWithPopup(
             new firebase.auth.GoogleAuthProvider()
@@ -70,8 +69,18 @@ export function AuthProvider(props) {
         router.push('/')
     }
 
+    async function logout() {
+        try {
+            setCarregando(true)
+            await firebase.auth().signOut()
+            await configurarSessao(null)
+        } finally {
+            setCarregando(false)
+        }
+    }
+
     useEffect(() => {
-        if(Cookies.get('admin-template-auth')) {
+        if (Cookies.get('admin-template-auth')) {
             const cancelar = firebase.auth().onIdTokenChanged(configurarSessao)
             return () => cancelar()
         } else {
@@ -82,7 +91,8 @@ export function AuthProvider(props) {
     return (
         <AuthContext.Provider value={{
             usuario,
-            loginGoogle
+            loginGoogle,
+            logout
         }}>
             {props.children}
         </AuthContext.Provider>
