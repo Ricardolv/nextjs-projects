@@ -5,7 +5,7 @@ import useAuth from "../data/hook/useAuth";
 
 export default function Autenticacao() {
 
-    const { usuario, loginGoogle } = useAuth()
+    const { cadastrar, login, loginGoogle } = useAuth()
 
     const [erro, setErro] = useState(null)
     const [modo, setModo] = useState<'login' | 'cadastro'>('login')
@@ -20,9 +20,9 @@ export default function Autenticacao() {
     async function submeter() {
         try {
             if (modo === 'login') {
-                console.log('login')
+                await login(email, senha)
             } else {
-                console.log('cadastrar')
+                await cadastrar(email, senha)
             }
         } catch(e) {
             exibirErro(e?.message ?? 'Erro desconhecido!')

@@ -1,4 +1,4 @@
-import router from 'next/router'
+import route from 'next/router'
 import { createContext, useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import firebase from '../../firebase/config'
@@ -60,13 +60,44 @@ export function AuthProvider(props) {
         
     }
 
+    async function login(email, senha) {
+        try {
+            setCarregando(true)
+            const resp = await firebase.auth()
+                .signInWithEmailAndPassword(email, senha)
+    
+            await configurarSessao(resp.user)
+            route.push('/')
+        } finally {
+            setCarregando(false)
+        }
+    }
+
+    async function cadastrar(email, senha) {
+        try {
+            setCarregando(true)
+            const resp = await firebase.auth()
+                .createUserWithEmailAndPassword(email, senha)
+    
+            await configurarSessao(resp.user)
+            route.push('/')
+        } finally {
+            setCarregando(false)
+        }
+    }
+
     async function loginGoogle() {
-        const resp = await firebase.auth().signInWithPopup(
-            new firebase.auth.GoogleAuthProvider()
-        )
-        
-        await configurarSessao(resp.user)
-        router.push('/')
+        try {
+            setCarregando(true)
+            const resp = await firebase.auth().signInWithPopup(
+                new firebase.auth.GoogleAuthProvider()
+            )
+    
+            await configurarSessao(resp.user)
+            route.push('/')
+        } finally {
+            setCarregando(false)
+        }
     }
 
     async function logout() {
@@ -92,6 +123,8 @@ export function AuthProvider(props) {
         <AuthContext.Provider value={{
             usuario,
             carregando,
+            login,
+            cadastrar,
             loginGoogle,
             logout
             
