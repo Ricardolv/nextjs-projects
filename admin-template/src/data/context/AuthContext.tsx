@@ -91,8 +91,10 @@ export function AuthProvider(props) {
     return (
         <AuthContext.Provider value={{
             usuario,
+            carregando,
             loginGoogle,
             logout
+            
         }}>
             {props.children}
         </AuthContext.Provider>
