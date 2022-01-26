@@ -10,6 +10,7 @@ export default function MenuLateral() {
                 flex flex-col items-center justify-center
                 bg-gradient-to-r from-indigo-500 to-purple-800
                 h-20 w-20
+                dark:bg-gray-900
             `}>
                 <Logo />
             </div>
@@ -24,8 +25,9 @@ export default function MenuLateral() {
                 <MenuItem texto="Sair" icone={IconeSair} 
                     onClick={() => console.log('logout')}
                     className={`
-                        text-red-600
+                        text-red-600 dark:text-red-400
                         hover:bg-red-400 hover:text-white
+                        dark:hover:text-white
                     `}
                 />
             </ul>
