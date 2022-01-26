@@ -32,7 +32,7 @@ export default function MenuItem(props: MenuItemProps) {
               cursor-pointer
         `}>
             {props.url ? (
-                <Link href={props.url}>
+                <Link href={props.url} passHref>
                     {renderizarLink()}
                 </Link>
             ) : (
